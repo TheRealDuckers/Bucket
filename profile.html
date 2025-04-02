@@ -97,7 +97,7 @@
   <div class="profile-container">
     <div class="profile-picture">
       <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profileImg">
-      <input type="file" id="profilePicInput" onchange="updateProfilePic()">
+      <input type="file" id="profilePicInput" accept="image/*" onchange="updateProfilePic()">
     </div>
     <div class="form-group">
       <label for="profileName">Name</label>
@@ -144,7 +144,7 @@
       const profileImg = document.getElementById("profileImg").src;
 
       if (!name) {
-        alert("Please enter a name.");
+        alert("Please enter a valid name.");
         return;
       }
 
@@ -155,3 +155,12 @@
       window.location.href = "index.html"; // Redirect back to main app page
     }
 
+    // Cancel button functionality
+    function cancelEdit() {
+      if (confirm("Are you sure you want to cancel? Unsaved changes will be lost.")) {
+        window.location.href = "index.html"; // Replace with the main app page or reset form
+      }
+    }
+  </script>
+</body>
+</html>
