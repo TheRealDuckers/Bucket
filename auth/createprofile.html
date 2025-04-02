@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Profile</title>
+  <title>Create Profile</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -93,15 +93,15 @@
   </style>
 </head>
 <body>
-  <h1>Edit Profile</h1>
+  <h1>Create your Bucket profile.</h1>
   <div class="profile-container">
     <div class="profile-picture">
       <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profileImg">
       <input type="file" id="profilePicInput" accept="image/*" onchange="updateProfilePic()">
     </div>
     <div class="form-group">
-      <label for="profileName">Name</label>
-      <input type="text" id="profileName" placeholder="Enter your name">
+      <label for="profileName">UserName</label>
+      <input type="text" id="profileName" placeholder="This is the name people will see">
     </div>
     <div class="form-buttons">
       <button onclick="saveProfile()">Save</button>
@@ -144,7 +144,7 @@
       const profileImg = document.getElementById("profileImg").src;
 
       if (!name) {
-        alert("Please enter a valid name.");
+        alert("Please enter text");
         return;
       }
 
@@ -152,13 +152,13 @@
       localStorage.setItem("profilePic", profileImg);
 
       alert("Profile updated successfully!");
-      window.location.href = "index.html"; // Redirect back to main app page
+      window.location.href = "https://therealduckers.github.io/Bucket/index.html"; // Redirect back to main app page
     }
 
     // Cancel button functionality
     function cancelEdit() {
       if (confirm("Are you sure you want to cancel? Unsaved changes will be lost.")) {
-        window.location.href = "index.html"; // Replace with the main app page or reset form
+        window.location.href = "https://therealduckers.github.io/Bucket/index.html"; // Replace with the main app page or reset form
       }
     }
   </script>
