@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Popup Overlay */
+        .popup-overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1); /* Semi-transparent background */
+            z-index: 1000; /* Above other elements */
+        }
+
+        /* Popup Content */
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            width: 500px;
+            text-align: center;
+            z-index: 1001;
+            opacity: 0; /* Start invisible */
+            transform: translate(-50%, -70%); /* Initial position */
+            animation: fadeIn 3s forwards; /* Animation on open */
+        }
+
+        /* Close Button */
+        .popup-content button {
+            padding: 10px 20px;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+
+        .close-btn {
+            margin-top: 10px;
+            background-color: teal;
+        }
+
+        .close-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -70%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Fade-out Animation */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -70%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Create a Bucket Account</h1>
+    <button id="openPopup">Go Back to welcome message</button>
+    <p>Before we make you an account, you need to agree to a few things first.......<p>
+    <h3> 1. No explicit language<h3>
+    <h3> 2. Keep it PG!<h3>
+    <h3> 3. Be helpful!<h3>
+    <h3> 4. Have fun!</h3> <h2> Bucket is designed to be a new, fun social media. Lets make social fun again!</h2>
+    <button href:"duckwhizz.uk">Lets go!</button>
+    
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content" id="popupContent">
+            <h2>Welcome to Bucket!</h2>
+            <p>Here is how it works:</p>
+            <ul>
+  <li>Post in a "bucket"</li>
+  <li>Get private replies</li>
+  <li>Enage in channel topics</li>
+</ul>
+<p>Sound good? Lets create a profile for you! This is unique and saved to the device you make it on - so if you made it on your laptop, your laptop is the <em>only</em> device that can post under your username (its safer that way).
+<p> What are you waiting for?? Lets get started!<p>
+            <button class="close-btn" id="closePopup">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // References to popup and buttons
+        const popup = document.getElementById('popup');
+        const popupContent = document.getElementById('popupContent');
+        const openPopup = document.getElementById('openPopup');
+        const closePopup = document.getElementById('closePopup');
+
+        // Open Popup with animation
+        openPopup.addEventListener('click', () => {
+            popup.style.display = 'block';
+            popupContent.style.animation = 'fadeIn 3s forwards'; // Trigger fade-in animation
+        });
+
+        // Close Popup with animation
+        closePopup.addEventListener('click', () => {
+            popupContent.style.animation = 'fadeOut 10s forwards'; // Trigger fade-out animation
+            setTimeout(() => {
+                popup.style.display = 'none'; // Hide popup after animation
+            }, 9000); // Match animation duration
+        });
+
+        // Close Popup when clicking outside the content
+        popup.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                popupContent.style.animation = 'fadeOut 10s forwards'; // Trigger fade-out animation
+                setTimeout(() => {
+                    popup.style.display = 'none'; // Hide popup after animation
+                }, 9000); // Match animation duration
+            }
+        });
+        window.addEventListener('load', () => {
+    popup.style.display = 'block'; // Display the popup
+    popupContent.style.animation = 'fadeIn 0.5s forwards'; // Trigger fade-in animation
+});
+
+        
+        
+    </script>
+</body>
+</html>
