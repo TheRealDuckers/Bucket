@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Create a Bucket Account</title>
     <style>
         /* General Styles */
         body {
@@ -62,6 +62,50 @@
         .close-btn:hover {
             background-color: #c0392b;
         }
+/* Styling for the "Let's Go" Button */
+.lets-go-btn {
+    background-color: teal; /* Teal background */
+    color: white; /* White text */
+    padding: 15px 30px; /* Spacing inside the button */
+    font-size: 18px; /* Slightly larger text */
+    font-weight: bold; /* Bold text for emphasis */
+    border: none; /* No border */
+    border-radius: 100px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 1s ease; /* Smooth transition for hover effects */
+    text-decoration: none; /* Remove underline if it's a link */
+    display: inline-block; /* Ensures proper padding if using <a> */
+}
+
+.lets-go-btn:hover {
+    background-color: #0056b3; /* Darker teal on hover */
+    color: #f2f2f2; /* Slightly lighter text on hover */
+    box-shadow: 0 4px 10px rgba(100, 1000, 0, 10000000000000000000000); /* Add shadow effect on hover */
+    transform: scale(1.1); /* Slightly enlarge button on hover */
+}
+
+        /* Rules Section */
+        .rules {
+            background-color: #f9f9f9; /* Light gray background */
+            border: 2px solid teal; /* Teal border */
+            border-radius: 10px; /* Rounded edges */
+            padding: 15px; /* Spacing inside the box */
+            margin: 20px 0; /* Space around the box */
+            box-shadow: 0 5px 15px rgba(5, 10, 0, 0.5); /* Subtle shadow for depth */
+        }
+
+        .rules h3 {
+            color: teal; /* Teal text color */
+            margin-bottom: 10px; /* Space below each rule */
+            font-weight: bold; /* Bold text for emphasis */
+            font-size: 18px; /* Adjust font size */
+        }
+
+        .rules h2 {
+            color: #333; /* Dark gray for the section conclusion */
+            margin-top: 15px; /* Space above */
+            font-style: italic; /* Slightly different style for emphasis */
+        }
 
         /* Fade-in Animation */
         @keyframes fadeIn {
@@ -89,14 +133,17 @@
     </style>
 </head>
 <body>
-    <h1>Create a Bucket Account</h1>
-    <button id="openPopup">Go Back to welcome message</button>
-    <p>Before we make you an account, you need to agree to a few things first.......<p>
-    <h3> 1. No explicit language<h3>
-    <h3> 2. Keep it PG!<h3>
-    <h3> 3. Be helpful!<h3>
-    <h3> 4. Have fun!</h3> <h2> Bucket is designed to be a new, fun social media. Lets make social fun again!</h2>
-    <button href:"duckwhizz.uk">Lets go!</button>
+    <div class="rules">
+  <h2>Before we make you an account, you need to agree to a few things first.......<h3>
+        <h3>1. No explicit language</h3>
+        <h3>2. Keep it PG!</h3>
+        <h3>3. Be helpful!</h3>
+        <h3>4. Have fun!</h3>
+        <h2>Bucket is designed to be a new, fun social media. Let's make social fun again!</h2>
+    </div>
+
+    <button class="lets-go-btn">Let's Go!</button>
+
     
 
     <!-- Popup Modal -->
@@ -105,12 +152,12 @@
             <h2>Welcome to Bucket!</h2>
             <p>Here is how it works:</p>
             <ul>
-  <li>Post in a "bucket"</li>
-  <li>Get private replies</li>
-  <li>Enage in channel topics</li>
-</ul>
-<p>Sound good? Lets create a profile for you! This is unique and saved to the device you make it on - so if you made it on your laptop, your laptop is the <em>only</em> device that can post under your username (its safer that way).
-<p> What are you waiting for?? Lets get started!<p>
+                <li>Post in a "bucket"</li>
+                <li>Get private replies</li>
+                <li>Engage in channel topics</li>
+            </ul>
+            <p>Sound good? Let's create a profile for you! This is unique and saved to the device you make it on - so if you made it on your laptop, your laptop is the <em>only</em> device that can post under your username (it's safer that way).</p>
+            <p>What are you waiting for?? Let's get started!</p>
             <button class="close-btn" id="closePopup">Close</button>
         </div>
     </div>
@@ -145,13 +192,12 @@
                 }, 9000); // Match animation duration
             }
         });
-        window.addEventListener('load', () => {
-    popup.style.display = 'block'; // Display the popup
-    popupContent.style.animation = 'fadeIn 0.5s forwards'; // Trigger fade-in animation
-});
 
-        
-        
+        // Auto-display popup on page load
+        window.addEventListener('load', () => {
+            popup.style.display = 'block'; // Display the popup
+            popupContent.style.animation = 'fadeIn 0.5s forwards'; // Trigger fade-in animation
+        });
     </script>
 </body>
 </html>
