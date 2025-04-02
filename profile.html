@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      margin: 20px;
+      text-align: center;
+    }
+
+    .profile-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-picture {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-picture img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    .profile-picture input[type="file"] {
+      margin-top: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .form-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      background-color: #4caf50;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-buttons button:hover {
+      background-color: #45a049;
+    }
+
+    .form-buttons .cancel-button {
+      background-color: #f44336;
+    }
+
+    .form-buttons .cancel-button:hover {
+      background-color: #e53935;
+    }
+  </style>
+</head>
+<body>
+  <h1>Edit Profile</h1>
+  <div class="profile-container">
+    <div class="profile-picture">
+      <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profileImg">
+      <input type="file" id="profilePicInput" onchange="updateProfilePic()">
+    </div>
+    <div class="form-group">
+      <label for="profileName">Name</label>
+      <input type="text" id="profileName" placeholder="Enter your name">
+    </div>
+    <div class="form-buttons">
+      <button onclick="saveProfile()">Save</button>
+      <button class="cancel-button" onclick="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // Load profile data into the form
+    window.onload = function () {
+      const savedName = localStorage.getItem("profileName");
+      const savedPic = localStorage.getItem("profilePic");
+
+      if (savedName) {
+        document.getElementById("profileName").value = savedName;
+      }
+
+      if (savedPic) {
+        document.getElementById("profileImg").src = savedPic;
+      }
+    };
+
+    // Update profile picture preview
+    function updateProfilePic() {
+      const fileInput = document.getElementById("profilePicInput");
+      const profileImg = document.getElementById("profileImg");
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profileImg.src = e.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      }
+    }
+
+    // Save profile data to localStorage
+    function saveProfile() {
+      const name = document.getElementById("profileName").value.trim();
+      const profileImg = document.getElementById("profileImg").src;
+
+      if (!name) {
+        alert("Please enter a name.");
+        return;
+      }
+
+      localStorage.setItem("profileName", name);
+      localStorage.setItem("profilePic", profileImg);
+
+      alert("Profile updated successfully!");
+      window.location.href = "index.html"; // Redirect back to main app page
+    }
+

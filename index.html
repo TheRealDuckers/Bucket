@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App with Profile Integration</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    /* Home Screen Styling */
+    .home-screen {
+      position: relative;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .bucket-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .bucket {
+      width: 200px;
+      margin: 10px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .left-arrow {
+      left: 10px;
+    }
+
+    .right-arrow {
+      right: 10px;
+    }
+
+    /* Chat Page Styling */
+    .chat-container {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      animation: fadeIn 0.5s ease;
+      background-color: #ffffff;
+    }
+
+    .top-bar {
+      background-color: #f1f1f1;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .top-bar .back-arrow {
+      font-size: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .top-bar .back-arrow:hover {
+      transform: translateX(-5px);
+    }
+
+    .profile {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .profile img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .profile span {
+      font-size: 14px;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .chat-section {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #ffffff;
+    }
+
+    .chat-section .message {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f1f1f1;
+      border-radius: 4px;
+      max-width: 60%;
+    }
+
+    .message.sent {
+      align-self: flex-end;
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 10px;
+      background-color: #f1f1f1;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .chat-input button {
+      padding: 10px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      background-color: #45a049;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Home Screen -->
+<h1 id="homeGreeting">Hello, User</h1>
+<script>
+  const savedName = localStorage.getItem("profileName") || "User";
+  document.getElementById("homeGreeting").textContent = `Hello, ${savedName}, how are you?`;
+</script>
+
+  <div class="home-screen" id="homeScreen">
+       <div class="arrows left-arrow" onclick="scrollLeft()">←</div>
+    <div class="arrows right-arrow" onclick="scrollRight()">→</div>
+    <ul class="bucket-list" id="bucketList">
+      <li class="bucket">Bucket 1</li>
+      <li class="bucket">Bucket 2</li>
+      <li class="bucket">Bucket 3</li>
+    </ul>
+  </div>
+
+  <!-- Chat Screen -->
+  <div class="chat-container" id="chatScreen">
+    <div class="top-bar">
+      <span class="back-arrow" onclick="goBack()">←</span>
+      <div class="profile" onclick="toggleDropdown()">
+        <img src="https://via.placeholder.com/30" alt="Profile Picture" id="topBarProfilePic">
+        <span id="topBarProfileName">John Doe</span>
+        <div class="dropdown" id="profileDropdown">
+          <a href="profile.html">Edit Profile</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div class="chat-section" id="chatSection">
+      <div class="message sent">Hi! How are you?</div>
+      <div class="message">I'm good, thanks!</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const homeScreen = document.getElementById('homeScreen');
+    const chatScreen = document.getElementById('chatScreen');
+    const bucketList = document.getElementById('bucketList');
+    const buckets = document.querySelectorAll('.bucket');
+    const chatSection = document.getElementById('chatSection');
+    const messageInput = document.getElementById('messageInput');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const topBarProfilePic = document.getElementById('topBarProfilePic');
+    const topBarProfileName = document.getElementById('topBarProfileName');
+
+    let currentIndex = 0;
+
+    // Load profile data into the main app
+    window.onload = function () {
+      const savedName = localStorage.getItem("profileName");
+      const savedPic = localStorage.getItem("profilePic");
+
+      if (savedName) {
+        topBarProfileName.textContent = savedName;
+      }
+
+      if (savedPic) {
+        topBarProfilePic.src = savedPic;
+      }
+    };
+
+    // Scroll left logic
+    function scrollLeft() {
+      if (currentIndex > 0) {
+        currentIndex--;
+      }
+      updateBucketVisibility();
+    }
+
+    // Scroll right logic
+    function scrollRight() {
+      if (currentIndex < buckets.length - 1) {
+        currentIndex++;
+      }
+      updateBucketVisibility();
+    }
+
+    // Update bucket positions
+    function updateBucketVisibility() {
+      bucketList.style.transform = `translateX(-${currentIndex * 220}px)`;
+    }
+
+    // Open chat when clicking on a bucket
+    buckets.forEach((item) => {
+      item.addEventListener('click', () => {
+        homeScreen.style.display = 'none';
+        chatScreen.style.display = 'flex';
+      });
+    });
+
+    // Go back to the home screen
+    function goBack() {
+      chatScreen.style.display = 'none';
+      homeScreen.style.display = 'block';
+    }
+
+    // Send a message and display it in the chat section
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message sent';
+        messageDiv.textContent = message;
+            chatSection.appendChild(messageDiv);
+            messageInput.value = '';
+            chatSection.scrollTop = chatSection.scrollHeight;
+        }
+    }
+
+    // Toggle profile dropdown
+    function toggleDropdown() {
+        profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', (event) => {
+        if (!event.target.closest('.profile')) {
+            profileDropdown.style.display = 'none';
+        }
+    });
+
+    // Initialize bucket positions
+    updateBucketVisibility();
+</script>
+</body>
+</html>
